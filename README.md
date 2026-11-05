@@ -32,3 +32,7 @@ Las capitales, alias y zonas se editan en ese mismo script.
 
 Mapas: [Natural Earth](https://www.naturalearthdata.com/) (dominio público) y
 [click_that_hood](https://github.com/codeforamerica/click_that_hood) (provincias de España).
+
+## Instalar como app
+
+Es una PWA: en Chrome/Edge aparece el icono de instalar en la barra de direcciones; en Android, menú ⋮ → «Instalar aplicación»; en iPhone/iPad (Safari), Compartir → «Añadir a pantalla de inicio». Después funciona también sin conexión.
