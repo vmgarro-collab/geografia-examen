@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geografía · Practica el examen de mapas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 id="homeLink" tabindex="0">🗺️ Geografía <span>práctica de examen</span></h1>
+    <div id="hud" class="hud hidden">
+      <span id="hudProgress"></span>
+      <span id="hudScore"></span>
+      <span id="hudTime"></span>
+      <button id="btnExit" class="btn small ghost">Salir</button>
+    </div>
+  </header>
+
+  <!-- ===== INICIO / CONFIGURACIÓN ===== -->
+  <main id="screenHome" class="screen">
+    <section class="card">
+      <h2>1 · ¿Qué mapa quieres practicar?</h2>
+      <div class="choices" id="optSet">
+        <label class="choice"><input type="radio" name="set" value="spain" checked>
+          <span><b>🇪🇸 España</b><small>52 provincias y sus capitales</small></span></label>
+        <label class="choice"><input type="radio" name="set" value="europe">
+          <span><b>🇪🇺 Europa</b><small>45 países y sus capitales</small></span></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2 · ¿Qué tipo de preguntas?</h2>
+      <div class="choices" id="optType">
+        <label class="choice"><input type="radio" name="type" value="locate" checked>
+          <span><b>📍 Situar en el mapa</b><small>Te digo un nombre y haces clic en el mapa</small></span></label>
+        <label class="choice"><input type="radio" name="type" value="name">
+          <span><b>✏️ Escribir el nombre</b><small>Te señalo una zona y escribes cómo se llama</small></span></label>
+        <label class="choice"><input type="radio" name="type" value="capital">
+          <span><b>🏛️ Escribir la capital</b><small>Te señalo una zona y escribes su capital</small></span></label>
+        <label class="choice"><input type="radio" name="type" value="locateCap">
+          <span><b>🔎 Encontrar por la capital</b><small>Te doy la capital y haces clic en su zona</small></span></label>
+        <label class="choice"><input type="radio" name="type" value="mix">
+          <span><b>🎲 Todo mezclado</b><small>Un poco de cada, como en el examen</small></span></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3 · Opciones</h2>
+      <div class="opts">
+        <label>Zona
+          <select id="optZone"></select>
+        </label>
+        <label>Nº de preguntas
+          <select id="optCount">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="30">30</option>
+            <option value="all">Todas</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="optAccents"> Exigir tildes al escribir</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4 · ¿Cómo quieres hacerlo?</h2>
+      <div class="actions">
+        <button class="btn" id="btnPractice">🌱 Practicar<small>Te digo al momento si aciertas y puedes pedir pistas</small></button>
+        <button class="btn primary" id="btnExam">📝 Hacer examen<small>Sin pistas ni correcciones hasta el final · nota sobre 10</small></button>
+        <button class="btn" id="btnStudy">👀 Estudiar el mapa<small>Explora, pasa el ratón y mira nombres y capitales</small></button>
+      </div>
+      <div id="failsBox" class="fails hidden">
+        <span id="failsText"></span>
+        <button class="btn small" id="btnFails">Repasar mis fallos</button>
+      </div>
+    </section>
+
+    <section class="card" id="bestBox">
+      <h2>🏆 Mis mejores notas</h2>
+      <div id="bestList" class="best"></div>
+    </section>
+  </main>
+
+  <!-- ===== JUEGO / EXAMEN ===== -->
+  <main id="screenGame" class="screen hidden">
+    <div class="qbar">
+      <div id="qText" class="qtext"></div>
+      <div id="qAnswer" class="qanswer"></div>
+      <div id="qFeedback" class="qfeedback" aria-live="polite"></div>
+    </div>
+    <div class="mapwrap">
+      <div class="zoom">
+        <button class="btn small" id="zIn" title="Acercar">＋</button>
+        <button class="btn small" id="zOut" title="Alejar">－</button>
+        <button class="btn small" id="zReset" title="Ver todo">⟲</button>
+      </div>
+      <svg id="map" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div id="studyPanel" class="study hidden">
+      <div id="studyInfo">Pasa el ratón (o toca) una zona para ver su nombre y su capital.</div>
+      <div class="studyopts">
+        <label class="check"><input type="checkbox" id="stCaps"> Mostrar capitales</label>
+        <label class="check"><input type="checkbox" id="stColors" checked> Colorear por zonas</label>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== RESULTADOS ===== -->
+  <main id="screenResult" class="screen hidden">
+    <section class="card result">
+      <div id="resultGrade" class="grade"></div>
+      <div id="resultMsg" class="msg"></div>
+      <div class="actions row">
+        <button class="btn primary" id="btnAgain">🔁 Otra vez</button>
+        <button class="btn" id="btnReviewFails">Repasar fallos</button>
+        <button class="btn ghost" id="btnHome">Volver al inicio</button>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Corrección</h2>
+      <div id="resultList" class="rlist"></div>
+    </section>
+  </main>
+
+  <footer>Mapas: Natural Earth y click_that_hood · Hecho con cariño para practicar 💛</footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
